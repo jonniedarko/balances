@@ -1,36 +1,20 @@
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
+
+
+
 var sh = require('shelljs');
 
-var plugins = require('gulp-load-plugins')({ lazy: false });
-var source = require('vinyl-source-stream');
-var watchify = require('watchify');
-var browserify = require('browserify');
-
-var paths = {
-    sass: ['../scss/**/*.scss']
-};
 
 module.exports = function(gulp){
 
+    require('./scss.task')(gulp);
+    require('./browserify.task')(gulp);
 
-    gulp.task('default', ['sass']);
+    gulp.task('default', ['sass', 'watch-js']);
 
-    gulp.task('sass', function(done) {
-        gulp.src('../scss/ionic.app.scss')
-            .pipe(sass())
-            .pipe(gulp.dest('../www/css/'))
-            .pipe(minifyCss({
-                keepSpecialComments: 0
-            }))
-            .pipe(rename({ extname: '.min.css' }))
-            .pipe(gulp.dest('../www/css/'))
-            .on('end', done);
-    });
+
 
     gulp.task('watch', function() {
         gulp.watch(paths.sass, ['sass']);
@@ -56,31 +40,6 @@ module.exports = function(gulp){
         done();
     });
 
-    gulp.task('browserify', function() {
 
-        var bundler = browserify({
-            // Required watchify args
-            cache: {}, packageCache: {}, fullPaths: true,
-            // Browserify Options
-            entries: ['./dev/js/app.js'],
-            //extensions: ['.coffee', '.hbs'],
-            debug: true
-        });
-
-        var bundle = function() {
-            return bundler
-                .bundle()
-                .on('error', plugins.util.log)
-                .pipe(source('app.js'))
-                .pipe(gulp.dest('./www/'));
-        };
-
-        if(global.isWatching) {
-            bundler = watchify(bundler);
-            bundler.on('update', bundle);
-        }
-
-        return bundle();
-    });
 
 };
