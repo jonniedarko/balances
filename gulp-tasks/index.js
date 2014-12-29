@@ -7,9 +7,40 @@ var changed     = require('gulp-changed');
 var sh = require('shelljs');
 
 config = {
+    index : {
+        src : 'dev/index.html',
+        dest : 'www/'
+    },
     images : {
         src : 'dev/img/**/*',
         dest : 'www/img/'
+    },
+    css : {
+        src : 'dev/css/**/*',
+        dest : 'www/css'
+    },
+    templates : {
+        src : 'dev/templates/**/*',
+        dest : 'www/templates/'
+    },
+    ionicframwork : {
+        dest : 'www/lib/ionic/',
+        css : {
+            src : 'dev/lib/ionic/css/**/*',
+            dest : 'www/lib/ionic'
+        }
+        ,fonts : {
+            src : 'dev/lib/ionic/fonts/**/*',
+            dest : 'www/lib/ionic'
+        }
+        ,js : {
+            src : 'dev/lib/ionic/js/**/*',
+            dest : 'www/lib/ionic'
+        }
+        //,scss : {
+        //    src : 'dev/lib/ionic/scss/**/*',
+        //        dest : 'www/lib/'
+        //}
     }
 };
 
@@ -19,7 +50,7 @@ module.exports = function(gulp){
     require('./scss.task')(gulp);
     require('./browserify.task')(gulp);
 
-    gulp.task('default', ['sass', 'watch-js']);
+
 
 
 
@@ -48,13 +79,43 @@ module.exports = function(gulp){
     });
     */
 
+    gulp.task('css-cp', function (){
+        return gulp.src(config.css.src)
+            .pipe(changed(config.css.dest))
+            .pipe(gulp.dest(config.css.dest));
+
+    });
     gulp.task('images-cp', function (){
-        gulp.src(config.images.src)
+        return gulp.src(config.images.src)
            .pipe(changed(config.images.dest))
            .pipe(gulp.dest(config.images.dest));
-        return x;
+
+    });
+    gulp.task('templates-cp', function(){
+
+        return gulp.src(config.templates.src)
+            //.pipe(changed(config.images.dest))
+            .pipe(gulp.dest(config.templates.dest));
+
+
+    });
+    gulp.task('index-cp', function(){
+        return gulp.src(config.index.src)
+            .pipe(changed(config.index.dest))
+            .pipe(gulp.dest(config.index.dest));
+
+    });
+    gulp.task('ionic-cp', function(){
+
+        return gulp.src([config.ionicframwork.css.src
+                        ,config.ionicframwork.js.src
+                        ,config.ionicframwork.fonts.src
+            ], {base : 'dev/lib/ionic'})
+            //.pipe(changed(config.images.dest))
+            .pipe(gulp.dest(config.ionicframwork.dest));
+
     });
 
-
+    gulp.task('default', ['sass', 'index-cp', 'css-cp', 'images-cp', 'ionic-cp', 'templates-cp','watch-js']);
 
 };
