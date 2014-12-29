@@ -20,7 +20,7 @@ config = {
         dest : 'www/css'
     },
     templates : {
-        src : 'dev/templates/**/*',
+        src : 'dev/js/**/*.html',
         dest : 'www/templates/'
     },
     ionicframwork : {
@@ -55,6 +55,7 @@ module.exports = function(gulp){
 
 
     gulp.task('watch', function() {
+        gulp.watch(paths.sass, ['sass']);
         gulp.watch(paths.sass, ['sass']);
     });
 
@@ -94,7 +95,7 @@ module.exports = function(gulp){
     gulp.task('templates-cp', function(){
 
         return gulp.src(config.templates.src)
-            //.pipe(changed(config.images.dest))
+            .pipe(changed(config.templates.src))
             .pipe(gulp.dest(config.templates.dest));
 
 

@@ -1,0 +1,11 @@
+<!--<div ng-cloak>-->
+
+<ion-view title="Transaction:">
+  <ion-content class="has-header">
+    <h1>{{transaction.title}}</h1>
+    <p class="currency" ng-class="(transaction.amount>=0 )? 'positve-currency' : 'negitive-currency' ">Amount : €{{ transaction.amount}}</p>
+
+    <button class="button button-full button-assertive activated " ng-click="deleteConfirmation()">Delete</button>
+  </ion-content>
+</ion-view>
+<!--</div>-->

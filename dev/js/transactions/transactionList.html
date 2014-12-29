@@ -1,0 +1,23 @@
+
+<ion-view view-title="Transactions">
+  <!--<ion-content class="padding">-->
+  <ion-nav-buttons side="right">
+    <a class="button button-icon icon ion-plus-round" ng-click="openModal()"></a>
+  </ion-nav-buttons>
+  </ion-header-bar>
+    <ion-content class="">
+      <ion-list>
+        <ion-item ng-repeat="transaction in transactions" href="#/tab/transactions/{{transaction.id}}">
+
+          <div class="row">
+            <div style="display:inline;float:left; width:50%";><i class="fa fa-money fa-lg"></i> {{transaction.title}}</div>
+            <div style="width:50%;text-align:right";class="overview-date">{{transaction.id | customDate}}</div>
+          </div><!-- End column 1 sub row 1 -->
+          <div class="row">
+            <div  style="width:50%;text-align:left" class="overview-description">{{transaction.description}}</div>
+            <div style="width:50%;text-align:right";class="overview-date">@ {{transaction.id | date:'HH:mm'}} est</div>
+          </div><!-- End column 1 sub row 1 -->
+        </ion-item>
+      </ion-list>
+    </ion-content>
+</ion-view>

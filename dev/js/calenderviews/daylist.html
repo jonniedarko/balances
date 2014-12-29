@@ -1,0 +1,31 @@
+
+
+  <ion-view view-title="Calender View">
+    <ion-nav-buttons side="right">
+      <a class="button button-icon icon ion-plus-round" ng-click="openModal()"></a>
+    </ion-nav-buttons>
+    <ion-content class="">
+      <ion-list>
+        <ion-item ng-repeat="transaction in transactions"  href="#/tab/calenderview/days/{{transaction['Date']}}">
+          <!--ui-sref="app.day">-->
+          <div class="row">
+            {{transaction["Date"] | customDate}}
+          </div>
+          <div class="row">
+            <div  class="col-66" >
+              <p class="currency positve-currency">totalin: {{getPayIns(transaction["amounts"].split(","))}} &nbsp;</p>
+              <p class="currency negitive-currency">totalouts: {{getPayOuts(transaction["amounts"].split(","))}}</p>
+            </div>
+            <div class="col">
+              <p class="currency" ng-class="(transaction['total']>=0 )? 'positve-currency' : 'negitive-currency' ">Total: {{transaction["total"]}} &nbsp;</p>
+              <p class="currency" ng-class="( (transaction['total'] + transaction['carry'])>=0 )? 'positve-currency' : 'negitive-currency' ">Balance : {{ transaction["total"] + transaction["carry"]}}</p>
+            </div>
+          </div>
+          <!-- End column 1 sub row 1 -->
+          <div class="row">
+            <i class="fa fa-money fa-lg"></i>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
