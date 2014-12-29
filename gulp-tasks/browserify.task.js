@@ -7,42 +7,6 @@ var mold = require('mold-source-map');
 
 module.exports = function (gulp){
 
-    // src : https://github.com/greypants/gulp-starter/issues/20
-    /*gulp.task('browserify', function() {
-
-        var bundler = browserify({
-            // Required watchify args
-            cache: {}, packageCache: {}, fullPaths: true,
-            // Browserify Options
-            entries: ['./dev/js/app.js'],
-            //extensions: ['.coffee', '.hbs'],
-            transform: reactify,
-            debug: true
-        });
-
-        var bundle = function() {
-            return bundler
-                .bundle()
-                .on('error', plugins.util.log)
-                .pipe(source('app.js'))
-                .pipe(gulp.dest('./www/'))
-                .pipe(mold.transformSourcesRelativeTo('./'))
-                .pipe(source('app.js'))
-                .pipe(gulp.dest('./www/js'));
-        };
-
-        if(global.isWatching) {
-            bundler = watchify(bundler);
-            bundler.on('update', bundle);
-        }
-
-        return bundle();
-        return browserify('./dev/js/app.js', {transform: reactify, debug: true})
-            .bundle()
-            .pipe(source('app.js'))
-            .pipe(gulp.dest('./www'));
-
-    });*/
 
     var browserify = require('browserify'),
         watchify = require('watchify'),

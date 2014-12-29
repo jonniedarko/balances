@@ -8,6 +8,7 @@ var rename = require('gulp-rename');
 var paths = {
     sass: ['../scss/**/*.scss']
 };
+
 module.exports = function(gulp){
     gulp.task('sass', function(done) {
         gulp.src('../scss/ionic.app.scss')
@@ -20,4 +21,4 @@ module.exports = function(gulp){
             .pipe(gulp.dest('../www/css/'))
             .on('end', done);
     });
-}
+};

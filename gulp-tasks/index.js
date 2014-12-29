@@ -2,9 +2,16 @@ var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
 
-
+var changed     = require('gulp-changed');
 
 var sh = require('shelljs');
+
+config = {
+    images : {
+        src : 'dev/img/**/*',
+        dest : 'www/img/'
+    }
+};
 
 
 module.exports = function(gulp){
@@ -20,7 +27,7 @@ module.exports = function(gulp){
         gulp.watch(paths.sass, ['sass']);
     });
 
-    gulp.task('install', ['git-check'], function() {
+    /*gulp.task('install', ['git-check'], function() {
         return bower.commands.install()
             .on('log', function(data) {
                 gutil.log('bower', gutil.colors.cyan(data.id), data.message);
@@ -38,6 +45,14 @@ module.exports = function(gulp){
             process.exit(1);
         }
         done();
+    });
+    */
+
+    gulp.task('images-cp', function (){
+        gulp.src(config.images.src)
+           .pipe(changed(config.images.dest))
+           .pipe(gulp.dest(config.images.dest));
+        return x;
     });
 
 
