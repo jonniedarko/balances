@@ -10,3 +10,7 @@
 	- browserify
 	- minify
 	- scss
+
+###debuging Gulp Tasks
+* unix(mac) : node-debug $(which gulp) taskName
+* windows : node-debug "path/to/node" taskName

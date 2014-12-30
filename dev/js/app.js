@@ -24,6 +24,7 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
       });
     })
 //init DB and Tables
+
     .run(function(DB){
 
     DB.config('my-balance', '1.0', 'Balances DB', 2 * 1024 * 1024);
@@ -198,6 +199,6 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                     }
                 }
             });
-
+        $urlRouterProvider.otherwise('/tab/dash');
 }]);
 

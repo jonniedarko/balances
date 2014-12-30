@@ -32,10 +32,14 @@ module.exports = function ($scope, DB, $ionicModal, $stateParams) {
 		 account = $scope.newAccount,
 		 payee_payer = $scope.newPayeePayer,
 		 indicator = $scope.newType;*/
+
+		console.log('date', date);
 		DB.insert({
 			"name": "mytransactions",
 			"columns": {
-				"id": new Date().getTime(),
+				"id": date.getTime(),
+				"date": date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
+				"time" : time,
 				"title": title,
 				"description": description,
 				"amount": amount,
