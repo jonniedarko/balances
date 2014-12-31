@@ -6,10 +6,10 @@
     </ion-nav-buttons>
     <ion-content class="">
       <ion-list>
-        <ion-item ng-repeat="transaction in transactions"  href="#/tab/calenderview/days/{{transaction['Date']}}">
+        <ion-item ng-repeat="transaction in transactions"  href="#/tab/calenderview/days/{{transaction['date'] | unixTime:'YYYY-mm-DD'}}">
           <!--ui-sref="app.day">-->
           <div class="row">
-            {{transaction["Date"] | customDate}}
+            {{transaction['date'] | customDate}}
           </div>
           <div class="row">
             <div  class="col-66" >

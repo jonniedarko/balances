@@ -30,7 +30,7 @@ module.exports = function ($stateParams, DB, $scope) {
 	}
 
 
-	DB.query("SELECT date(id, 'unixepoch') as Date, GROUP_CONCAT(indicator) as type, GROUP_CONCAT(amount) as amounts, sum(amount) as total FROM mytransactions GROUP BY Date").then(function (rows) {
+	DB.query("SELECT date, date(date, 'unixepoch') as DateStr, GROUP_CONCAT(indicator) as type, GROUP_CONCAT(amount) as amounts, sum(amount) as total FROM mytransactions GROUP BY DateStr").then(function (rows) {
 		console.log('group by');
 		var rowTotals = [];
 		rowTotals = rows.map(function (row) {
@@ -50,7 +50,6 @@ module.exports = function ($stateParams, DB, $scope) {
 
 		console.dir(rows);
 		$scope.transactions = rows;
-
 	}).catch(function (error) {
 		console.dir(error);
 	});
@@ -61,5 +60,4 @@ module.exports = function ($stateParams, DB, $scope) {
 			$scope.transactions = trans;
 		});
 	};
-
 };

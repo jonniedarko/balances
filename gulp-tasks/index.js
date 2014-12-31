@@ -2,6 +2,8 @@ var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
 
+var watchify = require('watchify');
+
 var changed     = require('gulp-changed');
 
 var sh = require('shelljs');
@@ -112,11 +114,23 @@ module.exports = function(gulp){
                         ,config.ionicframwork.js.src
                         ,config.ionicframwork.fonts.src
             ], {base : 'dev/lib/ionic'})
-            //.pipe(changed(config.images.dest))
+            .pipe(changed(config.images.dest))
             .pipe(gulp.dest(config.ionicframwork.dest));
 
     });
 
-    gulp.task('default', ['sass', 'index-cp', 'css-cp', 'images-cp', 'ionic-cp', 'templates-cp','watch-js']);
+   /* gulp.task('watch-templates', function() {
+        var bundler = watchify(config.templates.src, {debug:true});
+        bundler.on('update', rebundle);
+
+        function rebundle() {
+            return gulp.src(config.templates.src)
+                .pipe(gulp.dest(config.templates.dest));
+        }
+
+        return rebundle();
+    });*/
+
+    gulp.task('default', ['sass', 'ionic-cp', 'css-cp', 'images-cp', 'templates-cp', 'watch-js', 'index-cp']);
 
 };

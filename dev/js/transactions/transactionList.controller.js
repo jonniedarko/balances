@@ -32,13 +32,21 @@ module.exports = function ($scope, DB, $ionicModal, $stateParams) {
 		 account = $scope.newAccount,
 		 payee_payer = $scope.newPayeePayer,
 		 indicator = $scope.newType;*/
+		if(time !==null && time.length<5 && time.length> 3 && time.indexOf(':')!= -1)
+		{
+			var timeArray = time.split(":");
+			var hrs = time[0];
+			var mins = time[1];
+			date.setHours(hrs);
+			date.setMinutes(mins);
+		}
 
 		console.log('date', date);
 		DB.insert({
 			"name": "mytransactions",
 			"columns": {
 				"id": date.getTime(),
-				"date": date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
+				"date": date.getTime(),
 				"time" : time,
 				"title": title,
 				"description": description,

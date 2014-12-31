@@ -76,8 +76,8 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                 "name" : "mytransactions",
                 "columns" :
                     {
-                        "id" : Math.round(new Date(2014, 10, 29, 11, 30)/1000),//.getTime(),
-                        "date" : "2014-11-29",
+                        "id" : new Date().getTime(),
+                        "date" : Math.round(new Date(2014, 10, 29, 11, 30)/1000),//"2014-11-29",
                         "time" : "11:30",
                         "title" : "Payment",
                         "description" : "this is a test description",
@@ -88,12 +88,15 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                     }
 
             });
-
+            var newDate = Math.round(new Date()/1000);
+            function _newDate (){
+                return ++newDate;
+            }
             DB.insertMany("mytransactions",[
                 {
-                    "id" : Math.round(new Date(2014, 10, 29, 12, 30)/1000),//.getTime(),
+                    "id" : _newDate(),
                     "title" : "insurance",
-                    "date" : "2014-11-30",
+                    "date" : Math.round(new Date(2014, 10, 29, 12, 30)/1000),//"2014-11-30",
                     "time" : "12:30",
                     "description" : "this is a test description",
                     "amount" : -33.17,
@@ -102,9 +105,9 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                     "indicator" : "car"
                 },
                 {
-                    "id" : Math.round(new Date(2014, 10, 30, 12, 30)/1000),//.getTime(),
+                    "id" : _newDate(),
                     "title" : "ATM",
-                    "date" : "2014-11-30",
+                    "date" : Math.round(new Date(2014, 10, 30, 12, 30)/1000),//"2014-11-30",
                     "time" : "12:30",
                     "description" : "this is a test description",
                     "amount" : -20,
@@ -113,9 +116,9 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                     "indicator" : "cash"
                 },
                 {
-                    "id" : Math.round(new Date(2014, 10, 30, 13, 30)/1000),//.getTime(),
+                    "id" : _newDate(),
                     "title" : "Lunch",
-                    "date" : "2014-11-30",
+                    "date" : Math.round(new Date(2014, 10, 30, 13, 30)/1000),//"2014-11-30",
                     "time" : "13:30",
                     "description" : "this is a test description",
                     "amount" : -20,
@@ -124,9 +127,9 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                     "indicator" : "cash"
                 },
                 {
-                    "id" : Math.round(new Date(2014, 11, 1, 12, 30)/1000),//.getTime(),
+                    "id" : _newDate(),
                     "title" : "Lunch",
-                    "date" : "2014-12-29",
+                    "date" : Math.round(new Date(2014, 11, 1, 12, 30)/1000),//"2014-12-29",
                     "time" : "12:30",
                     "description" : "this is a test description",
                     "amount" : -5.99,
@@ -134,10 +137,8 @@ angular.module('starter', ['ionic', 'DashBoard', 'DataBase-Access', 'Transaction
                     "payee_payer" : "Dinner",
                     "indicator" : "cash"
                 }
-
             ]);
         }
-
 })
     .config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
         $stateProvider
