@@ -63,12 +63,13 @@ module.exports = function ($q){
 		}
 	};
 
-	Service.prototype.insert = function(json){
+	Service.prototype.insert = function(table, data){
 		var self = this;
+		var deferred = $q.defer();
 		if(self.isReady){
 
-			var table_name=json["name"];
-			var columns = json["columns"];
+			var table_name = table;
+			var columns = data;
 			var column_names = [];
 			var column_values = [];
 			var column_indicators=[];
@@ -81,13 +82,19 @@ module.exports = function ($q){
 			var query = 'INSERT INTO '+table_name+'('+column_names.join(',')+') VALUES ('+column_indicators.join(',')+')';
 			self.db.transaction(function(tx) {
 					tx.executeSql(query,column_values, function(tx, res){
-
+						deferred.resolve(res);
 					});
 				},
 				function(e) {
 					console.log("ERROR: " + e.message);
 				});
+
 		}
+		else{
+			deferred.reject("No Database Ready");
+		}
+
+		return deferred.promise;
 	}//END: insert
 
 	Service.prototype.insertMany = function(tableName, many){
@@ -98,7 +105,7 @@ module.exports = function ($q){
 					"name" : tableName,
 					"columns" : single
 				};
-				self.sqlService.insert(row);
+				self.sqlService.insert(tableName, row);
 			});
 		}
 	};

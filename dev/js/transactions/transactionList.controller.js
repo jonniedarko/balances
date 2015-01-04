@@ -46,7 +46,33 @@ module.exports = function ($scope, DB, $ionicModal, $stateParams, DBS) {
 		}
 
 		console.log('date', date);
-		DB.insert({
+
+		DBS.insert("transactions", {
+			"id": date.getTime(),
+			"date": date.getTime(),
+			"time" : time,
+			"title": title,
+			"description": description,
+			"amount": amount,
+			"account": account,
+			"payee_payer": payee_payer,
+			"indicator": indicator
+		}).then(function(result){
+			$scope.newTitle = null;
+			$scope.newDescription = null;
+			$scope.newAmount = null;
+			$scope.newAccount = null;
+			$scope.newPayeePayer = null;
+			$scope.newType = null;
+			$scope.modal.hide();
+			console.dir(result);
+			//$state.go('tab.transactions',{ toast: "Transaction '' successfully added" });
+		}, function(error){
+			$scope.modal.hide();
+			//$state.go('tab.transactions',{ toast: "An Error Occurred" });
+		});
+
+		/*DB.insert({
 			"name": "mytransactions",
 			"columns": {
 				"id": date.getTime(),
@@ -59,19 +85,14 @@ module.exports = function ($scope, DB, $ionicModal, $stateParams, DBS) {
 				"payee_payer": payee_payer,
 				"indicator": indicator
 			}
-		});
-		$scope.newTitle = null;
-		$scope.newDescription = null;
-		$scope.newAmount = null;
-		$scope.newAccount = null;
-		$scope.newPayeePayer = null;
-		$scope.newType = null;
+		});*/
 
-		$scope.closeModal();
+
+		//$scope.closeModal();
 	};
 
 	$scope.closeModal = function () {
-		$scope.updateList();
+		//$scope.updateList();
 		$scope.modal.hide();
 	};
 	//Cleanup the modal when we're done with it!

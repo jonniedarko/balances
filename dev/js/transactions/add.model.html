@@ -4,8 +4,9 @@
     </ion-header-bar>
     <ion-content>
         <div class="list">
+
             <label class="item item-input">
-                <input type="text" ng-model="newtitle" placeholder="Title">
+                <input type="text" ng-model="newtitle" placeholder="addTitle">
             </label>
             <label class="item item-input">
                 <input type="text" placeholder="Amount" ng-model="newAmount">
@@ -28,6 +29,7 @@
             <label class="item item-input">
                 <textarea placeholder="Description" ng-model="newDescription"></textarea>
             </label>
+
         </div>
         <div class="padding">
             <button class="button button-full button-positive activated" ng-click="submitNewTransaction(newtitle,newAmount, newType, newPayeePayer, newDate, newTime, newAccount, newDescription)">Add</button>

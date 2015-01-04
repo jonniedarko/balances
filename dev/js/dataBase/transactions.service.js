@@ -58,9 +58,8 @@ module.exports = function($q, DB, sqlService){
 		return Math.round(new Date()/1000);
 	};
 
-	mysqlService.insert({
-		"name" : "transactions",
-		"columns" :
+	mysqlService.insert("transactions",
+
 		{
 			"id" : newCreationUnixTimeStamp(),
 			"date" : Math.round(new Date(2014, 10, 29, 11, 30)/1000),//"2014-11-29 @ 11:30",
@@ -72,15 +71,31 @@ module.exports = function($q, DB, sqlService){
 			"payee_payer" : "SAP",
 			"indicator" : "cash"
 		}
-
-
-	});
+	);
 
 	function getAll(table) {
 		mysqlService.getAll({"name": table}).then(function (trans) {
 			//console.log("transactions", trans[0].title);
 			that.transactions = trans;
 		});
+	};
+
+	that.insert = function(table, data) {
+
+		var deferred = $q.defer();
+
+		mysqlService.insert(
+			table,
+			data
+		).then(function(result){
+			getAll("transactions");
+			deferred.resolve(result);
+
+		}, function(error){
+			deferred.reject(error);
+		});
+
+		return deferred.promise;
 	};
 
 	that.getTransaction = function(tablename, id){
