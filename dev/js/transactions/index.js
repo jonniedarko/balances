@@ -1,5 +1,5 @@
 module.exports = angular.module('Transactions',['DataBase-Access'])
-	.controller('TransactionCtrl', ['$scope', '$stateParams', '$state', 'DB', '$ionicModal', require('./transaction.controller')])
-	.controller('TransactionListCtrl', ['$scope', 'DB', '$ionicModal', '$stateParams', require('./transactionList.controller')])
-	.filter('customDate', ['$filter', require('./customDate.filter')])
-	.filter('unixTime', ['$filter', require('./unixTime.filter')]);
+	.controller('TransactionCtrl', require('./transaction.controller'))
+	.controller('TransactionListCtrl', require('./transactionList.controller'))
+	.filter('customDate', require('./customDate.filter'))
+	.filter('unixTime',  require('./unixTime.filter'));

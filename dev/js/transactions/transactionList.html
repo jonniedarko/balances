@@ -6,8 +6,22 @@
   </ion-nav-buttons>
   </ion-header-bar>
     <ion-content class="">
-      <ion-list>
+     <!-- <ion-list>
         <ion-item ng-repeat="transaction in transactions" href="#/tab/transactions/{{transaction.id}}">
+
+          <div class="row">
+            <div style="display:inline;float:left; width:50%";><i class="fa fa-money fa-lg"></i> {{transaction.title}}</div>
+            <div style="width:50%;text-align:right";class="overview-date">{{transaction.date | customDate}}</div>
+          </div><
+          <div class="row">
+            <div  style="width:50%;text-align:left" class="overview-description">{{transaction.description}}</div>
+            <div style="width:50%;text-align:right";class="overview-date">@ {{transaction.date | unixTime:'HH:mm'}} est</div>
+          </div>
+        </ion-item>
+      </ion-list>-->
+
+      <ion-list>
+        <ion-item ng-repeat="transaction in dbs.transactions" href="#/tab/transactions/{{transaction.id}}">
 
           <div class="row">
             <div style="display:inline;float:left; width:50%";><i class="fa fa-money fa-lg"></i> {{transaction.title}}</div>

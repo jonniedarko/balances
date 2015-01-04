@@ -1,5 +1,6 @@
 var plugins = require('gulp-load-plugins')({ lazy: false });
 var source = require('vinyl-source-stream');
+var ngannotate = require('browserify-ngannotate');
 var watchify = require('watchify');
 var browserify = require('browserify');
 var reactify = require('reactify');
@@ -17,18 +18,20 @@ module.exports = function (gulp){
         destFile = 'app.js';
 
     gulp.task('browserify', function() {
-        return browserify(sourceFile, {debug:true})
-            .bundle()
+        return browserify(sourceFile)
+            //.transform(ngannotate)
+            .bundle({debug:true})
             .pipe(source(destFile))
             .pipe(gulp.dest(destFolder));
     });
 
     gulp.task('watch-browserify', function() {
-        var bundler = watchify(sourceFile, {debug:true});
+        var bundler = watchify(sourceFile);
         bundler.on('update', rebundle);
 
         function rebundle() {
-            return bundler.bundle()
+            return bundler.bundle({debug:true})
+
                 .pipe(source(destFile))
                 .pipe(gulp.dest(destFolder));
         }

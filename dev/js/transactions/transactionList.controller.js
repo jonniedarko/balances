@@ -1,9 +1,13 @@
-module.exports = function ($scope, DB, $ionicModal, $stateParams) {
+
+//@ngInject
+module.exports = function ($scope, DB, $ionicModal, $stateParams, DBS) {
 
 	$scope.transactions = [];
+	$scope.dbs = DBS;
+	console.dir(DBS);
 
 	//if($stateParams.toast !== undefined){
-	console.log("toast", $stateParams.toast)
+	console.log("toast", $stateParams.toast);
 	//}
 
 	$scope.updateList = function () {
@@ -82,4 +86,5 @@ module.exports = function ($scope, DB, $ionicModal, $stateParams) {
 	$scope.$on('modal.removed', function () {
 		// Execute action
 	});
+
 };

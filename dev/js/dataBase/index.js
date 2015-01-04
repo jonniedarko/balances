@@ -1,4 +1,5 @@
 module.exports = angular.module('DataBase-Access',[])
+    .factory('sqlService', require('./database.factory'))
 .factory('DB', [ '$q',function($q){
     var _this = this;
     _this.isReady = false;
@@ -9,7 +10,7 @@ module.exports = angular.module('DataBase-Access',[])
         db = window.openDatabase(name, version, description,size,callback);
         _this.isReady = true;
         //console.log('BOOM');
-    }
+    };
 
     _this.createTable = function (json){
         if(_this.isReady){
@@ -29,7 +30,7 @@ module.exports = angular.module('DataBase-Access',[])
             });
             var query = 'CREATE TABLE IF NOT EXISTS ' + table_name + ' (' + columns.join(',') + ')';
             db.transaction(function(tx) {
-                console.log(query);
+                //console.log(query);
                 tx.executeSql(query);
             });
         }
@@ -51,18 +52,18 @@ module.exports = angular.module('DataBase-Access',[])
                 column_indicators.push('?')
 
             });*/
-            console.dir(Object.keys(columns));
+           // console.dir(Object.keys(columns));
             Object.keys(columns).forEach(function(key){
                     column_names.push(key);
                     column_values.push(columns[key]);
                     column_indicators.push('?');
             });
             var query = 'INSERT INTO '+table_name+'('+column_names.join(',')+') VALUES ('+column_indicators.join(',')+')';
-            console.log("query: "+query+' '+column_values.toString());
+          //  console.log("query: "+query+' '+column_values.toString());
             db.transaction(function(tx) {
                 tx.executeSql(query,column_values, function(tx, res){
-                    console.log("insertId: " + res.insertId + " -- probably 1");
-                    console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+                   // console.log("insertId: " + res.insertId + " -- probably 1");
+                    //console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
                 });
             },
             function(e) {
@@ -77,11 +78,11 @@ module.exports = angular.module('DataBase-Access',[])
                 var row = {
                     "name" : tableName,
                     "columns" : single
-                }
+                };
                 _this.insert(row);
             });
         }
-    }
+    };
     _this.delete = function(json){
         var deferred = $q.defer();
         if(_this.isReady){
@@ -97,15 +98,15 @@ module.exports = angular.module('DataBase-Access',[])
 
             });
             var query = 'DELETE FROM '+table_name+' WHERE '+column_name_indicators.join(' AND ');
-            console.log("query: "+query + column_values.toString());
+           // console.log("query: "+query + column_values.toString());
 
             db.transaction(function(tx) {
                     tx.executeSql(query,[column_values], function(tx,res){
-                        console.log("res",res);
+                    //    console.log("res",res);
                         //deferred.resolve(output);
                         deferred.resolve("successfully Deleted");
                     }, function(tx, err){
-                        console.error(err);
+                     //   console.error(err);
                         deferred.reject(err);
                     });
             });
@@ -126,15 +127,15 @@ module.exports = angular.module('DataBase-Access',[])
 
             db.transaction(function(tx) {
                     tx.executeSql(query,[], function(tx,res){
-                        console.log("res.rows.length: " + res.rows.length + " -- should be 1");
-                        console.dir(res.rows);
+                        //console.log("res.rows.length: " + res.rows.length + " -- should be 1");
+                        //console.dir(res.rows);
                         var output = [];
 
                         for (var i = 0; i < res.rows.length; i++) {
                             output.push(res.rows.item(i));
                         }
 
-                        console.log("output",output)
+                       // console.log("output",output)
                         deferred.resolve(output);
                     }, function(tx, err){
 
@@ -154,8 +155,8 @@ module.exports = angular.module('DataBase-Access',[])
 
             db.transaction(function(tx) {
                     tx.executeSql(query,[], function(tx,res){
-                        console.log("res.rows.length: " + res.rows.length + " -- should be 1");
-                        console.dir(res.rows);
+                        //console.log("res.rows.length: " + res.rows.length + " -- should be 1");
+                        //console.dir(res.rows);
 
 
                         deferred.resolve(res.rows.item(0));
@@ -165,16 +166,16 @@ module.exports = angular.module('DataBase-Access',[])
                     });
             });
             return deferred.promise;
-        };
-    }
+        }
+    };
 
 
     _this.query = function(query, values){//, onSuccessCallback, onErrorCallback){
         var deferred = $q.defer();
         if(_this.isReady){
             var onSuccessCB = function(tx,res){ /*onSuccessCallback || */
-                console.log("res.rows.length: " + res.rows.length + " -- should be 1");
-                console.dir(res.rows);
+               // console.log("res.rows.length: " + res.rows.length + " -- should be 1");
+               // console.dir(res.rows);
                 var output = [];
 
                 for (var i = 0; i < res.rows.length; i++) {
@@ -186,7 +187,7 @@ module.exports = angular.module('DataBase-Access',[])
             var onErrorCB = function(tx, err){/*onErrorCallback || */
 
                 deferred.reject(err);
-            }
+            };
 
             db.transaction(function(tx) {
                     tx.executeSql(query,values,onSuccessCB ,onErrorCB );
@@ -195,9 +196,10 @@ module.exports = angular.module('DataBase-Access',[])
 
         return deferred.promise;
 
-    }
+    };
 
     return _this;
 
 
-}]);
+}])
+    .service('DBS', require('./transactions.service'));
